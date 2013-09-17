@@ -1,0 +1,15 @@
+
+package obra.jdbc;
+
+import java.sql.Connection;
+
+
+public class Obra {
+    
+    public static void main(String[] args) {
+           Connection con = new Conexao().getConn() ;     //Pega a conexão com o Banco de dados
+           
+    }
+    
+}
+    
