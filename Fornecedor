@@ -1,6 +1,3 @@
-//por Lucas
-
-
 
 package obra.jdbc;
 
@@ -16,6 +13,7 @@ public class Fornecedor {
   private String estado;
   private String fone;
   private String email;
+  private float cnpj ;
   
   public Fornecedor(){} //O método construtor não tem nenhum tipo de retorno.
                         //O nome do método construtor tem que ser igual o nome da classe.
@@ -100,7 +98,7 @@ public class Fornecedor {
     public void setRazao_social(String razao_social) {
         this.razao_social = razao_social;
     }
-  private float cnpj ;
+  
     
 }
 
