@@ -1,0 +1,18 @@
+delimiter $$
+SET foreign_key_checks = 0; $$
+drop table fornecedor;
+$$
+create table fornecedor (
+codFornecedor int not null,
+razao_social varchar(50),
+fantasia varchar(50),
+endereco varchar(40),
+bairro varchar(30),
+cidade varchar(30),
+estado varchar(2),
+fone varchar(30),
+email varchar(40),
+cnpj varchar(18),
+primary key(codFornecedor));
+
+$$ SET foreign_key_checks = 1; $$
