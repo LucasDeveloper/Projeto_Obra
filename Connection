@@ -1,1 +1,32 @@
 //classe conexão
+
+
+package obra.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+public class Conexao {
+    
+     private String endereco = "jdbc:mysql://localhost:3306/mydb";
+    private String usuario = "root";
+    private String senha = "admin";
+
+    public Connection getConn() {
+        Connection conexao = null;
+        try {
+            conexao = DriverManager.getConnection(endereco, usuario, senha);
+            System.out.println("Logado Com Sucesso ao banco de dados");
+        } catch (SQLException ex) {
+            System.out.println("Erro de conexao: "+ex.getMessage());
+            System.out.println("Endereço,usuario ou senha errados,verifique !");
+        }
+        return conexao;
+    }
+ 
+    
+}
