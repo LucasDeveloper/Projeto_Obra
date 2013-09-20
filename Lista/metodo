@@ -1,0 +1,297 @@
+public List<Fornecedor> lista(){
+     List <Fornecedor> fornecedores=new ArrayList();
+     try{
+         
+     //Com base na conexao pega um statement responsavel por executar as query. 
+     Statement stmt=con.createStatement();
+     String sql="select * from fornecedor";
+         
+          //Execução da query pelo statement e retorno armazenado no ResultSet
+          ResultSet rs=stmt.executeQuery(sql);
+          
+          while(rs.next()){
+           Fornecedor fc=new  Fornecedor(rs.getInt("codigo"), 
+	  rs.getString("fantasia"),
+          rs.getString("endereco"),
+          rs.getString("bairro"),
+          rs.getString("cidade"),
+          rs.getString("estado"),
+          rs.getString("fone"),
+          rs.getString("email"),
+          rs.getString("razao_social"),
+          rs.getFloat("cnpj"));
+           
+          }
+          
+          
+      }catch(Exception ex){
+          System.out.println("erro ao gerar a lista"+ex.getMessage());
+      }
+  return fornecedores;
+  }
+    
+    
+}
+
+classe fornecedor
+
+
+
+
+package projetoobra;
+
+
+public class Fornecedor {
+    
+   private  int codigo;
+  private String razao_social;
+  private String fantasia;
+  private String endereco;
+  private String bairro;
+  private String cidade;
+  private String estado;
+  private String fone;
+  private String email;
+  private float cnpj ;
+  
+  public Fornecedor(){} //O método construtor não tem nenhum tipo de retorno.
+                        //O nome do método construtor tem que ser igual o nome da classe.
+                        //Os modificadores de acesso só podem ser: public, private ou protect.
+
+    public Fornecedor(int codigo,String fantasia,String endereco, String bairro,String cidade,
+             String estado, String fone, String email, String razao_social, float cnpj){
+            
+             
+            
+              
+        this.bairro=bairro;
+        this.cidade=cidade;
+        this.cnpj=cnpj;
+        this.codigo=codigo;
+        this.email=email;
+        this.endereco=endereco;
+        this.estado=estado;
+        this.fantasia=fantasia;
+        this.fone=fone;
+        this.razao_social=razao_social;
+    }
+
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public float getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(float cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getFantasia() {
+        return fantasia;
+    }
+
+    public void setFantasia(String fantasia) {
+        this.fantasia = fantasia;
+    }
+
+    public String getFone() {
+        return fone;
+    }
+
+    public void setFone(String fone) {
+        this.fone = fone;
+    }
+
+    public String getRazao_social() {
+        return razao_social;
+    }
+
+    public void setRazao_social(String razao_social) {
+        this.razao_social = razao_social;
+    }
+  
+    
+}
+
+
+
+fornecedor DAO
+
+
+
+package projetoobra.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import projetoobra.Fornecedor;
+
+public class FornecedorDAO {
+    
+    private Connection con;
+
+    public FornecedorDAO(Connection con){
+        this.con=con;
+    }
+    
+        public void inserir(Fornecedor fornecedor) {
+        try {
+  String sql = "insert into fornecedor  (codfornecedor,razao_social,fantasia,endereco,bairro,cidade,estado,fone,email,cnpj) values (?,?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, fornecedor.getCodigo());
+            stmt.setString(2, fornecedor.getRazao_social());
+            stmt.setString(3, fornecedor.getFantasia());
+            stmt.setString(4,fornecedor.getEndereco());
+            stmt.setString(5, fornecedor.getBairro());
+            stmt.setString(6, fornecedor.getCidade());
+            stmt.setString(7,fornecedor.getEstado());
+            stmt.setString(8, fornecedor.getFone());
+            stmt.setString(9, fornecedor.getEmail());
+            stmt.setFloat(10, fornecedor.getCnpj());
+            
+            
+            
+            stmt.executeUpdate(); //Comandos de manipulação de dados
+            System.out.println("Inserido com sucesso no banco de dados!");
+        } catch (SQLException ex) {
+            System.out.println("Erro no insert: " + ex.getMessage());
+        }
+        
+        
+
+    }
+            
+public void Atualizar(Fornecedor fornecedor){
+    try{
+        String sql="update fornecedor set codfornecedor=?,razao_social=?,fantasia=?,endereco=?,bairro=?,cidade=?,estado=?,fone=?,email=?,cnpj=? where codfornecedor=?";
+    PreparedStatement stmt=con.prepareStatement(sql); //update para atualizar as informações do fornecedor
+    
+    
+            stmt.setInt   (1, fornecedor.getCodigo());
+            stmt.setString(2, fornecedor.getRazao_social());
+            stmt.setString(3, fornecedor.getFantasia());
+            stmt.setString(4,fornecedor.getEndereco());
+            stmt.setString(5, fornecedor.getBairro());
+            stmt.setString(6, fornecedor.getCidade());
+            stmt.setString(7,fornecedor.getEstado());
+            stmt.setString(8, fornecedor.getFone());
+            stmt.setString(9, fornecedor.getEmail());
+            stmt.setFloat(10, fornecedor.getCnpj());
+            stmt.setInt  (11, fornecedor.getCodigo());
+    
+    
+    
+    stmt.executeUpdate();  
+        System.out.println("Atualizado Com Sucesso!");
+        
+    }catch (SQLException ex) {
+        System.out.println("Erro Ao Atualizar"+ex.getMessage());
+    
+    }
+    }
+    public void remover(Integer codigo ){
+      try{
+        String sql="delete  from fornecedor where codfornecedor=? ";
+        
+        
+       
+        
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, codigo);
+        
+        
+        stmt.executeUpdate();
+            System.out.println("Deletado com sucesso!");
+        }catch(SQLException ex){
+            System.out.println("Erro ao deletar!"+ex.getMessage());
+            
+   }
+} 
+  public List<Fornecedor> lista(){
+     List <Fornecedor> fornecedores=new ArrayList();
+     try{
+         
+     //Com base na conexao pega um statement responsavel por executar as query. 
+     Statement stmt=con.createStatement();
+     String sql="select * from fornecedor";
+         
+          //Execução da query pelo statement e retorno armazenado no ResultSet
+          ResultSet rs=stmt.executeQuery(sql);
+          
+          while(rs.next()){
+           Fornecedor fc=new  Fornecedor(rs.getInt("codigo"), 
+	  rs.getString("fantasia"),
+          rs.getString("endereco"),
+          rs.getString("bairro"),
+          rs.getString("cidade"),
+          rs.getString("estado"),
+          rs.getString("fone"),
+          rs.getString("email"),
+          rs.getString("razao_social"),
+          rs.getFloat("cnpj"));
+           
+          }
+          
+          
+      }catch(Exception ex){
+          System.out.println("erro ao gerar a lista"+ex.getMessage());
+      }
+  return fornecedores;
+  }
+    
+    
+}
+
